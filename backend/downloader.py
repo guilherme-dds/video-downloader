@@ -1,7 +1,14 @@
-from flask import Flask, jsonify, request
+import os
+from flask import Flask, jsonify, request, send_file
 from yt_dlp import YoutubeDL
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(
+    app,
+    resources={r"/*": {"origins": "*"}},
+    supports_credentials=True
+)
 
 url = []
 
@@ -10,15 +17,42 @@ def post_video():
     data = request.json
 
     ydl_opts = {
-        "format": "bestvideo[height=1080]",
+        "format": "bestvideo+bestaudio/best",
         "merge_output_format": "mp4",
         "outtmpl": "videos/%(title)s.%(ext)s",
+
+        # Cookies do Brave
+        "cookiesfrombrowser": ("brave",),
+
+        # JS Runtime (formato correto)
+        "js_runtimes": {
+            "node": {}
+        },
+
+        # Resolver desafio do YouTube
+        "remote_components": ["ejs:github"],
+
+        # Evita alguns bloqueios
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["web", "tv"]
+            }
+        },
+
+        # Evita crash silencioso
+        "quiet": False,
+        "verbose": True,
     }
 
     with YoutubeDL(ydl_opts) as ydl:
-        ydl.download([data["url"]])
+        info = ydl.extract_info(data["url"], download=True)
+        filename = ydl.prepare_filename(info)
 
-    return jsonify(data["url"]), 201
+    return send_file(
+        filename,
+        as_attachment=True,
+        download_name=os.path.basename(filename)
+    )
 
 if __name__ == "__main__":
     app.run(
