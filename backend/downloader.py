@@ -21,25 +21,20 @@ def post_video():
         "merge_output_format": "mp4",
         "outtmpl": "videos/%(title)s.%(ext)s",
 
-        # Cookies do Brave
         "cookiesfrombrowser": ("brave",),
 
-        # JS Runtime (formato correto)
         "js_runtimes": {
             "node": {}
         },
 
-        # Resolver desafio do YouTube
         "remote_components": ["ejs:github"],
 
-        # Evita alguns bloqueios
         "extractor_args": {
             "youtube": {
                 "player_client": ["web", "tv"]
             }
         },
 
-        # Evita crash silencioso
         "quiet": False,
         "verbose": True,
     }
