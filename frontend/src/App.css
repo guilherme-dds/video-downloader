@@ -1,5 +1,6 @@
 body {
   width: 100%;
+  font-family: "Poppins", sans-serif;
 }
 
 .main {
@@ -9,4 +10,89 @@ body {
   justify-content: center;
   min-height: 100vh;
   gap: 20px;
+}
+
+h1 {
+  font-size: 60px;
+  line-height: 0px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  line-height: 0px;
+  padding-bottom: 30px;
+}
+
+input {
+  border-radius: 10px;
+  border: 0;
+  max-width: 100%;
+  padding: 19px 32px;
+  font-size: 14px;
+  background-color: #3f3f3f;
+}
+
+.download-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 19px;
+  height: 340px;
+  width: 700px;
+
+  background-color: #5e5e5e;
+  padding: 20px 40px;
+  border-radius: 17px;
+}
+
+.section-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #3f3f3f;
+  width: 100%;
+  height: 45px;
+  border-radius: 30px;
+
+  .section-video,.section-audio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3f3f3f;
+    height: 32px;
+    width: 50%;
+    margin: 0 7px;
+    border-radius: 32px;
+    cursor: pointer;
+  }
+
+  .section-video.active,.section-audio.active {
+    background-color: #5e5e5e;
+  }
+}
+
+.select-quality {
+  border-radius: 10px;
+  border: 0;
+  width: 100%;
+  padding: 19px 32px;
+  font-size: 14px;
+  background-color: #3f3f3f;
+  padding-right: 20px;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
