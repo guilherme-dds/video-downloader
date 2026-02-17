@@ -5,12 +5,13 @@ import axios from 'axios'
 function App() {
   const [videoUrl, setVideoUrl] = useState("");
   const [quality, setQuality] = useState("1080");
+  const [audioFormat, setAudioFormat] = useState("wav");
   const [active, setActive] = useState("video");
 
   const requestBody =
   active === "video"
     ? { url: videoUrl, quality }
-    : { url: videoUrl, audio: true };
+    : { url: videoUrl, audioFormat };
 
   const downloadFile = async () => {
     try {
@@ -92,9 +93,9 @@ function App() {
             <label htmlFor="">URL do vídeo</label>
             <input type="text" placeholder='https://www.youtube.com/watch?v=' onChange={(e) => setVideoUrl(e.target.value)} />
             <label htmlFor="">Qualidade do áudio</label>
-            <select name="" id="" className='select-quality'>
-              <option value="1080p">MP3 (320kbps)</option>
-              <option value="720p">HD (720p)</option>
+            <select name="" id="" className='select-quality' onChange={(e) => setAudioFormat(e.target.value)}>
+              <option value="wav">WAV</option>
+              <option value="mp3">MP3</option>
             </select>
           </div>
           }
