@@ -17,13 +17,37 @@ function App() {
         { responseType: "blob" }
       );
 
+      const disposition = response.headers["content-disposition"];
+
+      function getFilenameFromDisposition(disposition: string) {
+        if (!disposition) return "video.mp4";
+
+        const utf8Match = disposition.match(/filename\*\=UTF-8''(.+)/i);
+
+        if (utf8Match && utf8Match[1]) {
+          return decodeURIComponent(utf8Match[1]);
+        }
+
+        const asciiMatch = disposition.match(/filename="(.+)"/i);
+
+        if (asciiMatch && asciiMatch[1]) {
+          return asciiMatch[1];
+        }
+
+        return "video.mp4";
+      }
+
+      console.log(disposition)
+
+      const filename = getFilenameFromDisposition(disposition);
+
       const blob = new Blob([response.data]);
 
       const url = window.URL.createObjectURL(blob);
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "video.mp4";
+      a.download = filename;
 
       document.body.appendChild(a);
       a.click();
