@@ -4,13 +4,16 @@ import axios from 'axios'
 
 function App() {
   const [videoUrl, setVideoUrl] = useState("");
+  const [quality, setQuality] = useState("1080");
   const [active, setActive] = useState("video");
 
   const downloadFile = async () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/download",
-        { url: videoUrl },
+        { url: videoUrl,
+          quality: quality,
+        },
         { responseType: "blob" }
       );
 
@@ -50,9 +53,9 @@ function App() {
             <label htmlFor="">URL do vídeo</label>
             <input type="text" placeholder='https://www.youtube.com/watch?v=' onChange={(e) => setVideoUrl(e.target.value)} />
             <label htmlFor="">Qualidade do vídeo</label>
-            <select name="" id="" className='select-quality'>
-              <option value="1080p">FULL HD (1080p)</option>
-              <option value="720p">HD (720p)</option>
+            <select name="" id="" className='select-quality' onChange={(e) => setQuality(e.target.value)}>
+              <option value="1080">FULL HD (1080p)</option>
+              <option value="720">HD (720p)</option>
             </select>
           </div>
           }
