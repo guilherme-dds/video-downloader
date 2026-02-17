@@ -7,13 +7,17 @@ function App() {
   const [quality, setQuality] = useState("1080");
   const [active, setActive] = useState("video");
 
+  const requestBody =
+  active === "video"
+    ? { url: videoUrl, quality }
+    : { url: videoUrl, audio: true };
+
   const downloadFile = async () => {
     try {
+
       const response = await axios.post(
         "http://localhost:5000/download",
-        { url: videoUrl,
-          quality: quality,
-        },
+        requestBody,
         { responseType: "blob" }
       );
 

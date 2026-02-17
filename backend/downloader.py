@@ -17,16 +17,23 @@ url = []
 def post_video():
     data = request.json
 
-    if data["quality"] == "1080":
-        formatQuality = "height<=1080"
-    elif data["quality"] == "720":
-        formatQuality = "height<=720"
-    else:
-        formatQuality = "height<=1080"
+    quality = data.get("quality")
+    audio = data.get("audio")
 
+    if quality == "1080":
+        formatQuality = "bestvideo[height<=1080]+bestaudio/best"
+
+    elif quality == "720":
+        formatQuality = "bestvideo[height<=720]+bestaudio/best"
+
+    elif audio is True:
+        formatQuality = "bestaudio/best"
+
+    else:
+        formatQuality = "bestvideo[height<=1080]+bestaudio/best"
 
     ydl_opts = {
-        "format": "bestvideo["+ formatQuality + "]+bestaudio/best",
+        "format": formatQuality,
         "merge_output_format": "mp4",
         "outtmpl": "videos/%(title)s.%(ext)s",
 
