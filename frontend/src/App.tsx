@@ -7,6 +7,7 @@ function App() {
   const [quality, setQuality] = useState("1080");
   const [audioFormat, setAudioFormat] = useState("wav");
   const [active, setActive] = useState("video");
+  const [loading, setLoading] = useState(false);
 
   const requestBody =
   active === "video"
@@ -15,9 +16,10 @@ function App() {
 
   const downloadFile = async () => {
     try {
+      setLoading(true);
 
       const response = await axios.post(
-        "http://backend:5000/download",
+        "http://localhost:5000/download",
         requestBody,
         { responseType: "blob" }
       );
@@ -62,6 +64,8 @@ function App() {
 
     } catch (error) {
       console.error("Erro ao baixar arquivo:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,7 +103,7 @@ function App() {
             </select>
           </div>
           }
-          <button onClick={downloadFile}>Download</button>
+          <button onClick={downloadFile} disabled={loading}>{ loading ? "Fazendo download..." : "Download"}</button>
         </div>
       </div>
     </>

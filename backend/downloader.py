@@ -9,13 +9,12 @@ CORS(
     app,
     resources={r"/download": {"origins": "*"}}, 
     expose_headers=["Content-Disposition"],
-    supports_credentials=True
 )
-
-postprocessors = []
 
 @app.route("/download", methods=["POST"])
 def post_video():
+    postprocessors = []
+
     data = request.json
 
     quality = data.get("quality")
@@ -43,26 +42,10 @@ def post_video():
         "format": formatQuality,
         "merge_output_format": "mp4",
         "outtmpl": "videos/%(title)s.%(ext)s",
-
-        "cookiesfrombrowser": ("brave",),
-
-        "js_runtimes": {
-            "node": {}
-        },
-
-        "remote_components": ["ejs:github"],
-
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["web", "tv"]
-            }
-        },
-
         "postprocessors": postprocessors,
-
-        "quiet": False,
-        "verbose": True,
+        "noplaylist": True,
     }
+
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(data["url"], download=True)
