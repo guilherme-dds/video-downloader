@@ -17,7 +17,7 @@ function App() {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/download",
+        "http://backend:5000/download",
         requestBody,
         { responseType: "blob" }
       );
