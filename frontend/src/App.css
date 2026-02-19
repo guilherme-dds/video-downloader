@@ -96,3 +96,11 @@ input {
   flex-direction: column;
   gap: 10px;
 }
+
+button {
+  border: 0;
+}
+
+button:hover {
+  background-color: #202020;
+}
