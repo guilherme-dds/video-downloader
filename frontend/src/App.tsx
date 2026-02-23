@@ -44,8 +44,6 @@ function App() {
         return "video.mp4";
       }
 
-      console.log(disposition)
-
       const filename = getFilenameFromDisposition(disposition);
 
       const blob = new Blob([response.data]);
